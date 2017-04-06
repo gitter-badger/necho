@@ -1,0 +1,32 @@
+body {
+  height: 100%;
+}
+
+nav {
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  font-size: 1.4em;
+}
+
+.messages {
+  overflow-y: scroll;
+}
+
+.msg {
+  width: 100%;
+  padding: 3px;
+  font-size: 1.1em;
+}
+
+.msg:nth-child(2n+1) {
+  background: #f0f0f0;
+}
+
+.msg-footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  padding: 0px 3px 5px 3px;
+}

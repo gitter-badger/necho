@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Necho</title>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="css/bulma.css" />
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-left">
+      <a class="nav-item">
+        <i class="fa fa-lg fa-bars"></i>
+      </a>
+    </div>
+
+    <div class="nav-center">
+      <a class="nav-item">
+        <span class="logo">Necho</span>
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <a class="nav-item">
+        <span class="icon">
+          <i class="fa fa-users"></i>
+        </span>
+      </a>
+      <span class="nav-item">
+        <a class="button is-primary">
+          <span>Login</span>
+        </a>
+        <a class="button is-primary is-outlined">
+          <span>Inscription</span>
+        </a>
+      </span>
+    </div>
+  </nav>
+
+  <div class="chat" id="chat" style="position: relative;">
+    <div>
+      <ul class="messages" id="messages">
+        <li>
+          <div class="msg-footer">
+            <form id="message-form" action="">
+              <div class="control is-grouped">
+                <p class="control is-expanded">
+                  <input id="message" class="input" type="text" placeholder="Votre message" autocomplete="off">
+                </p>
+                <p class="control">
+                  <a class="button is-primary" onclick="$('#message-form').submit()">
+                    <span class="icon is-small">
+                      <i class="fa fa-send"></i>
+                    </span>
+                  </a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    $('#messages').scrollTop($('#messages')[0].scrollHeight);
+
+    let socket = io();
+
+    $('#message-form').submit(function() {
+      let message = $('#message').val();
+
+      if(message.length > 0) {
+        socket.emit('chat_message', message);
+        console.log($('#message').val());
+        $('#message').val('');
+      }
+
+      return false;
+    });
+
+    socket.on('chat_message', function(msg) {
+      $('#message-form').before($('<li class="msg">').text(msg));
+    });
+  </script>
+</body>
+</html>
